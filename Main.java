@@ -119,22 +119,6 @@ public class Main {
                 return node;
             }
 
-            private static boolean negativeUnbalanceAndActualValueLessThanNodeRightValue(Node node, int value, int balance) {
-                return balance < -1 && value < node.right.value;
-            }
-
-            private static boolean positiveUnbalanceAndActualValueGreaterThanNodeLeftValue(Node node, int value, int balance) {
-                return balance > 1 && value > node.left.value;
-            }
-
-            private static boolean negativeUnbalanceAndActualValueGreaterThanNodeRightValue(Node node, int value, int balance) {
-                return balance < -1 && value > node.right.value;
-            }
-
-            private static boolean positiveUnbalanceAndActualValueLessThanNodeLeftValue(Node node, int value, int balance) {
-                return balance > 1 && value < node.left.value;
-            }
-
             private int getHeight(Node node) {
                 if (node == null)
                     return 0;
@@ -144,20 +128,20 @@ public class Main {
             private Node doBalanceIfNecessary(Node node, int value) {
                 int balance = getBalance(node);
 
-                if (positiveUnbalanceAndActualValueLessThanNodeLeftValue(node, value, balance)) {
+                if (balance > 1 && value < node.left.value) {
                     return rightRotation(node);
                 }
 
-                if (negativeUnbalanceAndActualValueGreaterThanNodeRightValue(node, value, balance)) {
+                if (balance < -1 && value > node.right.value) {
                     return leftRotation(node);
                 }
 
-                if (positiveUnbalanceAndActualValueGreaterThanNodeLeftValue(node, value, balance)) {
+                if (balance > 1 && value > node.left.value) {
                     node.left = leftRotation(node.left);
                     return rightRotation(node);
                 }
 
-                if (negativeUnbalanceAndActualValueLessThanNodeRightValue(node, value, balance)) {
+                if (balance < -1 && value < node.right.value) {
                     node.right = rightRotation(node.right);
                     return leftRotation(node);
                 }
